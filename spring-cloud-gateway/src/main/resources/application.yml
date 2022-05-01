@@ -1,0 +1,35 @@
+server:
+  port: 8940
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: gatewayservice
+
+  cloud:
+    gateway:
+#      discovery:
+#        locator:
+#          enabled: true
+#          lower-case-service-id: true
+      routes:
+        - id: licensing-service
+          uri: lb://LICENSINGSERVICE
+          predicates:
+            - Path=/api/licensing/**
+          filters:
+            - RewritePath=/api/licensing/(?<segment>.*), /$\{segment}
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

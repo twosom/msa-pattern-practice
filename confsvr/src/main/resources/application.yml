@@ -1,0 +1,23 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        encrypt:
+          enabled: false
+        git:
+          uri: https://github.com/twosom/config-repo
+          search-paths: licensingservice, organizationservice
+          default-label: master
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
